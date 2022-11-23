@@ -8,7 +8,7 @@ import { DagreNodesOnlyLayout } from './customDagreNodesOnly';
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss' ]
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   name = 'NGX-Graph Demo';
@@ -17,10 +17,10 @@ export class AppComponent implements OnInit {
   clusters: ClusterNode[] = clusters;
 
   links: Edge[] = links;
-  
-  layout: String | Layout = new DagreNodesOnlyLayout();
+
+  layout: String | Layout = 'dagreCluster';
   public layoutSettings = {
-    orientation: 'TB'
+    orientation: 'TB',
   };
 
   layouts: any[] = [
@@ -48,7 +48,6 @@ export class AppComponent implements OnInit {
     },
   ];
 
-
   // line interpolation
   curveType: string = 'Bundle';
   curve: any = shape.curveLinear;
@@ -62,8 +61,8 @@ export class AppComponent implements OnInit {
     'Natural',
     'Step',
     'Step After',
-    'Step Before'
-  ];  
+    'Step Before',
+  ];
 
   draggingEnabled: boolean = true;
   panningEnabled: boolean = true;
@@ -75,7 +74,7 @@ export class AppComponent implements OnInit {
   panOnZoom: boolean = true;
 
   autoZoom: boolean = true;
-  autoCenter: boolean = true; 
+  autoCenter: boolean = true;
   showMiniMap: boolean = true;
 
   update$: Subject<boolean> = new Subject();
@@ -85,7 +84,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.setInterpolationType(this.curveType);
   }
-   
+
   setInterpolationType(curveType) {
     this.curveType = curveType;
     if (curveType === 'Bundle') {
@@ -121,7 +120,7 @@ export class AppComponent implements OnInit {
   }
 
   setLayout(layoutName: string): void {
-    const layout = this.layouts.find(l => l.value === layoutName);
+    const layout = this.layouts.find((l) => l.value === layoutName);
     this.layout = layoutName;
     if (!layout.isClustered) {
       this.clusters = undefined;
@@ -132,7 +131,7 @@ export class AppComponent implements OnInit {
 
   public getStyles(node: Node): any {
     return {
-      'background-color': node.data.type==='scheme'? 'Tomato' : 'Orange'
+      'background-color': node.data.type === 'scheme' ? 'Tomato' : 'Orange',
     };
   }
 }

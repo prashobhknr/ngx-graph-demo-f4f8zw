@@ -13,7 +13,8 @@ p {
   overflow: hidden;
 }
 
-mat-form-field, mat-checkbox {
+mat-form-field,
+mat-checkbox {
   display: block;
   width: 100%;
 }
@@ -27,19 +28,20 @@ mat-checkbox {
 }
 
 :host ::ng-deep {
-  //display: block;
+  display: block;
   height: inherit;
   width: inherit;
 
   .cardContainer {
-    height: 100;
-    width: 200;
-    // display: block;
+    height: inherit;
+    width: inherit;
+    display: block;
     border-radius: 50%;
 
     .name {
       font-size: 20px;
       padding-top: 25px;
+      padding-bottom: 10px;
     }
 
     label {
