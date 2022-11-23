@@ -1,9 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import * as shape from 'd3-shape';
 import { Edge, Node, ClusterNode, Layout } from '@swimlane/ngx-graph';
-import { nodes, clusters, links } from './data';
+import { clusters, categories, relations } from './data';
 import { Subject } from 'rxjs';
 import { DagreNodesOnlyLayout } from './customDagreNodesOnly';
+
+export class Category {
+  id: string;
+  name: string;
+  type: string;
+  productId?: string;
+}
+
+export class Relation {
+  id: string;
+  source: string;
+  target: string;
+  level?: string;
+}
+
 
 @Component({
   selector: 'my-app',
@@ -13,10 +28,24 @@ import { DagreNodesOnlyLayout } from './customDagreNodesOnly';
 export class AppComponent implements OnInit {
   name = 'NGX-Graph Demo';
 
-  nodes: Node[] = nodes;
-  clusters: ClusterNode[] = clusters;
+  nodes: Node[] = categories.map(category => <Node>{
+    id: category.id,
+    label: category.name,
+    data:{
+      type: category.type,
+      product_id: category.productId
+    }
+  });
 
-  links: Edge[] = links;
+  clusters: ClusterNode[] = clusters
+
+
+  links: Edge[] = relations.map(relation=> <Edge>{
+    id: relation.id,
+    source: relation.source,
+    target: relation.target,
+    label: relation.level? 'category of scheme': 'subcategorisation',
+  })
 
   layout: String | Layout = 'dagreCluster';
   public layoutSettings = {
