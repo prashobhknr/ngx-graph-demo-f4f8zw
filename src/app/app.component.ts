@@ -3,6 +3,7 @@ import * as shape from 'd3-shape';
 import { Edge, Node, ClusterNode, Layout } from '@swimlane/ngx-graph';
 import { nodes, clusters, links } from './data';
 import { Subject } from 'rxjs';
+import { DagreNodesOnlyLayout } from './customDagreNodesOnly';
 
 @Component({
   selector: 'my-app',
@@ -17,7 +18,11 @@ export class AppComponent implements OnInit {
 
   links: Edge[] = links;
   
-  layout: String | Layout = 'dagreCluster';
+  layout: String | Layout = new DagreNodesOnlyLayout();
+  public layoutSettings = {
+    orientation: 'TB'
+  };
+
   layouts: any[] = [
     {
       label: 'Dagre',
@@ -36,6 +41,10 @@ export class AppComponent implements OnInit {
     {
       label: 'D3 Force Directed',
       value: 'd3ForceDirected',
+    },
+    {
+      label: 'Custom',
+      value: new DagreNodesOnlyLayout(),
     },
   ];
 
@@ -65,8 +74,9 @@ export class AppComponent implements OnInit {
   maxZoomLevel: number = 4.0;
   panOnZoom: boolean = true;
 
-  autoZoom: boolean = false;
-  autoCenter: boolean = false; 
+  autoZoom: boolean = true;
+  autoCenter: boolean = true; 
+  showMiniMap: boolean = true;
 
   update$: Subject<boolean> = new Subject();
   center$: Subject<boolean> = new Subject();
@@ -118,5 +128,11 @@ export class AppComponent implements OnInit {
     } else {
       this.clusters = clusters;
     }
+  }
+
+  public getStyles(node: Node): any {
+    return {
+      'background-color': node.data.type==='scheme'? 'Tomato' : 'Orange'
+    };
   }
 }

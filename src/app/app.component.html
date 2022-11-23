@@ -53,6 +53,7 @@
         [nodes]="nodes"
         [clusters]="clusters"
         [layout]="layout"
+        [layoutSettings]="layoutSettings"
         [curve]="curve"
         [draggingEnabled]="draggingEnabled"
         [panningEnabled]="panningEnabled"
@@ -66,6 +67,7 @@
         [update$]="update$"
         [center$]="center$"
         [zoomToFit$]="zoomToFit$"
+        [showMiniMap]="showMiniMap"
       >
 
         <ng-template #defsTemplate>
@@ -77,13 +79,19 @@
         <ng-template #clusterTemplate let-cluster>
           <svg:g class="node cluster">
             <svg:rect rx="5" ry="5" [attr.width]="cluster.dimension.width" [attr.height]="cluster.dimension.height" [attr.fill]="cluster.data.color" />
+            <svg:text alignment-baseline="left" [attr.x]="10" [attr.y]="(cluster.dimension.height / 2)-20">Category</svg:text>
+            <svg:text alignment-baseline="left" [attr.x]="10" [attr.y]="cluster.dimension.height / 2">{{cluster.label}}</svg:text>
           </svg:g>
         </ng-template>
 
         <ng-template #nodeTemplate let-node>
           <svg:g class="node">
-            <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="node.data.color" />
-            <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">{{node.label}}</svg:text>
+            <svg:foreignObject width="200" height="100">
+              <xhtml:div class="cardContainer" [ngStyle]="getStyles(node)">
+                <label class="name">{{ node.label }}</label>
+                <label>{{ node.data.product_id }}</label>
+              </xhtml:div>
+            </svg:foreignObject>
           </svg:g>
         </ng-template>
 
